@@ -1,0 +1,52 @@
+# Root-level Git ignore for ShoppingBasket
+# Standard .NET build artifacts
+bin/
+obj/
+**/bin/
+**/obj/
+
+# Visual Studio / IDE
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+.history/
+
+# Logs and diagnostics
+*.log
+logs/
+TestResult*/
+TestResults/
+coverage/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Node / Frontend
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+
+# Environment files
+.env
+.env.*
+
+# Local databases and data
+*.db
+/data/
+
+# Docker
+*.pid
+
+# Ignore solution guide plans and Copilot instructions
+plans/
+plans/**
+.github/copilot-instructions.md
+copilot-instructions.md
