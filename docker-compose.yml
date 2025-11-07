@@ -1,0 +1,15 @@
+services:
+  shoppingbasket:
+    build: .
+    image: shoppingbasket:latest
+    container_name: shoppingbasket
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Data Source=/app/data/app.db
+    volumes:
+      - sb-data:/app/data
+    restart: unless-stopped
+volumes:
+  sb-data:
