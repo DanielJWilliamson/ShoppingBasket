@@ -7,12 +7,21 @@ test('checkout quantity adjust and clear item', async ({ page }) => {
   // Ensure we have at least one product tile
   const firstAdd = page.getByText('Add').first()
   await expect(firstAdd).toBeVisible()
+  // Click Add and wait for the basket addItem POST to complete to avoid racing navigation
+  const addCompleted = page.waitForResponse(r =>
+    r.request().method() === 'POST' &&
+    r.url().includes('/api/baskets/') &&
+    r.url().endsWith('/items') &&
+    r.ok()
+  )
   await firstAdd.click()
-  // Navigate to checkout directly to avoid sidebar-only Basket interactions
-  await page.getByRole('link', { name: 'Checkout' }).click()
+  await addCompleted
+  // Navigate directly to checkout route to avoid nav races
+  await page.goto('/checkout')
   // Wait for checkout table to render rows
   const rows = page.locator('tbody tr')
-  await expect(rows.first()).toBeVisible({ timeout: 10000 })
+  // Wait until at least one row exists (works whether data came from cache or network)
+  await expect(rows).not.toHaveCount(0, { timeout: 10000 })
   const row = rows.first()
   // Quantity element: support both span[aria-live="polite"] and input quantity (fallback)
   const qtySpan = row.locator('span[aria-live="polite"]').first()

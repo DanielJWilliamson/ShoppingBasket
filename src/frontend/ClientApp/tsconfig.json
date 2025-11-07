@@ -12,7 +12,9 @@
     "noEmit": true,
     "strict": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {},
+    "types": ["vite/client"]
   },
-  "include": ["src"]
+  "include": ["src", "tests", "env.d.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
